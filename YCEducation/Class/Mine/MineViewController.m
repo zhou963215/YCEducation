@@ -50,7 +50,7 @@
     
     [self.view addSubview:self.mine.tableView];
     [self.mine getData];
-    
+    NSLog( @"12312332");
 }
 
 
