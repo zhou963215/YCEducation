@@ -27,8 +27,8 @@
 @implementation WebViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     if (_peopleType!=0) {
         [self throwData];
@@ -41,16 +41,16 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+//    [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
     
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
-    [[IQKeyboardManager sharedManager]setEnable:NO];
+//    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
+//    [[IQKeyboardManager sharedManager]setEnable:NO];
     
 }
 
@@ -75,12 +75,12 @@
     [self.webView loadRequest:request];
     
     
-    //    UITapGestureRecognizer *webTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(webTap:)];
-    //    webTap.numberOfTouchesRequired = 1;
-    //    webTap.numberOfTapsRequired = 1;
-    //    webTap.delegate = self;
-    //    webTap.cancelsTouchesInView = NO;
-    //    [self.webView addGestureRecognizer:webTap];
+        UITapGestureRecognizer *webTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(webTap:)];
+        webTap.numberOfTouchesRequired = 1;
+        webTap.numberOfTapsRequired = 1;
+        webTap.delegate = self;
+        webTap.cancelsTouchesInView = NO;
+        [self.webView addGestureRecognizer:webTap];
     
     
 }
@@ -130,29 +130,28 @@
     __weak typeof(self) weakSelf = self;
     self.context[@"appBackAction"] = ^(){
         
-        NSLog(@"%@",[NSThread currentThread]);
+//        NSLog(@"%@",[NSThread currentThread]);
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [weakSelf.navigationController popViewControllerAnimated:YES];
             
         });
         
-        NSLog(@"123123");
         
         
     };
     //替代人选择跳转
-    self.context[@"replaceGotoApp"] = ^(){
-        
-        GroupViewController * group = [GroupViewController new];
-        group.isOnly = YES;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-        
-            [weakSelf.navigationController pushViewController:group animated:YES];
-            
-        });
-    };
+//    self.context[@"replaceGotoApp"] = ^(){
+//        
+//        GroupViewController * group = [GroupViewController new];
+//        group.isOnly = YES;
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//        
+//            [weakSelf.navigationController pushViewController:group animated:YES];
+//            
+//        });
+//    };
     
     //抄送人
     self.context[@"copyGotoApp"] = ^(){
@@ -275,21 +274,21 @@
         
         CGPoint webPoint = self.webView.scrollView.contentOffset;
         _keyBorardY = webPoint.y;
-        webPoint.y += _keyBorardH-keyboardRect.origin.y+40;
+        webPoint.y += _keyBorardH-keyboardRect.origin.y+100;
         
         self.webView.scrollView.contentOffset = webPoint;
         
     }
-    else if (_keyBorardH<=130){
-        
-        CGPoint webPoint = self.webView.scrollView.contentOffset;
-        _keyBorardY = webPoint.y;
-        webPoint.y = -80;
-        
-        self.webView.scrollView.contentOffset = webPoint;
-        
-        
-    }
+//    else if (_keyBorardH<=130){
+//        
+//        CGPoint webPoint = self.webView.scrollView.contentOffset;
+//        _keyBorardY = webPoint.y;
+//        webPoint.y = -80;
+//        
+//        self.webView.scrollView.contentOffset = webPoint;
+//        
+//        
+//    }
     else{
         
         CGPoint webPoint = self.webView.scrollView.contentOffset;
