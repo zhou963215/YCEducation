@@ -21,6 +21,7 @@
 }
 @property(nonatomic,strong)UIWebView * webView;
 @property(nonatomic,strong)ZHHud * hud;
+@property(nonatomic,assign)BOOL isError;
 @end
 
 @implementation WebViewController
@@ -87,9 +88,6 @@
     
     
         _hud = [ZHHud initWithLoading];
-
-    
-    
     
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -102,6 +100,7 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    _isError = NO;
 
     
         [_hud hideAnimated:YES];
@@ -181,7 +180,7 @@
     
     
     [_hud hideAnimated:YES];
-     
+    _isError = YES;
     
 }
 
@@ -218,16 +217,23 @@
     
             }];
   
+    NSDictionary * dcit = @{@"data":data.dataArray};
+    NSError *parseError = nil;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dcit options:NSJSONWritingPrettyPrinted error:&parseError];
+    
+    NSString * str = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
     //抄送人数据
     if (_peopleType==1) {
         
-        [self.context[@"copyReceive"] callWithArguments:@[data.dataArray]];
+        [self.context[@"copyReceive"] callWithArguments:@[str]];
         
     }
     //替代人数据
     if (_peopleType==2) {
         
-        [self.context[@"replaceReceive"] callWithArguments:@[data.dataArray]];
+        [self.context[@"replaceReceive"] callWithArguments:@[str]];
         
     }
     
@@ -238,8 +244,15 @@
 
 - (void)backLastView{
     
-    
-     [self.context[@"backAction"] callWithArguments:@[]];
+    if (_isError) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    }
+    else{
+        [self.context[@"backAction"] callWithArguments:@[]];
+ 
+    }
     
     
 }
