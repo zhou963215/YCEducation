@@ -121,7 +121,7 @@
         
         lastModifiedStr = lastModifiedStr.length > 0 ? lastModifiedStr : @"";
         
-        [mutableHeaders setValue:lastModifiedStr forKey:@"If-Modified-Since"];
+        [mutableHeaders setValue:lastModifiedStr forKey:@"If-None-Match"];
         
         return mutableHeaders;
         

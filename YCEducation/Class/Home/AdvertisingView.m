@@ -10,6 +10,8 @@
 #import "AdvertisingView.h"
 #import "UIView+SDExtension.h"
 #import "AdvertisingCollectionViewCell.h"
+#import "UIView+Controller.h"
+#import "DetailWebProductVC.h"
 NSString * const identer = @"zhcCell";
 
 @interface AdvertisingView()<UICollectionViewDataSource, UICollectionViewDelegate>
@@ -107,6 +109,8 @@ NSString * const identer = @"zhcCell";
 
 - (void)automaticChange
 {
+    
+//    NSLog(@"%@",[NSThread currentThread]);
     int currentIndex = _collection.contentOffset.y / _flowLayout.itemSize.height;
     int targetIndex = currentIndex + 1;
     if (targetIndex == _totalItemsCount) {
@@ -158,9 +162,16 @@ NSString * const identer = @"zhcCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.delegate respondsToSelector:@selector(selectScrollView:didSelectItemAtIndex:)]) {
-        [self.delegate selectScrollView:self didSelectItemAtIndex:indexPath.item % self.imagesGroup.count];
-    }
+    long itemIndex = indexPath.item % self.imagesGroup.count;
+    NSDictionary *data = self.imagesGroup[itemIndex];
+    DetailWebProductVC * detail = [DetailWebProductVC new];
+    detail.url = data[@"href"];
+    [self.collection.navigationController pushViewController:detail animated:YES];
+
+    
+//    if ([self.delegate respondsToSelector:@selector(selectScrollView:didSelectItemAtIndex:)]) {
+//        [self.delegate selectScrollView:self didSelectItemAtIndex:indexPath.item % self.imagesGroup.count];
+//    }
 }
 
 #pragma mark - UIScrollViewDelegate

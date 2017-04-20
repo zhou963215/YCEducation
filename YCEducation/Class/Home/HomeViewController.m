@@ -16,7 +16,7 @@
 #import <MJRefresh/MJRefresh.h>
 #import "ProductViewController.h"
 #import "DetailWebProductVC.h"
-@interface HomeViewController ()<SDCycleScrollViewDelegate,ZHCycleScrollViewDelegate>
+@interface HomeViewController ()
 {
     UIScrollView *scrollView;
     BOOL isFirst;
@@ -44,7 +44,6 @@
     
     scrollView = [UIScrollView new];
     scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
-    [scrollView.mj_header beginRefreshing];
     scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scrollView];
     WEAKSELF(wk);
@@ -64,14 +63,15 @@
     
     [[ZHNetWorking sharedZHNetWorking]POSTLOGIN:@"2001" parameters:@{@"token":token} success:^(id  _Nonnull responseObject) {
         
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         if ([responseObject[@"status"]isEqualToString:@"ok"]) {
             
             NSDictionary * dict = responseObject[@"data"];
             
             [[NSUserDefaults standardUserDefaults]setObject:dict[@"campusId"] forKey:@"campusId"];
 
-            
+            [scrollView.mj_header beginRefreshing];
+
         }
         
         
@@ -148,7 +148,6 @@
     }];
     CGFloat h = (HEIGHT-64-49) *( 150/(HEIGHT-64-49));
     _baner = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, WIDTH, h) imagesGroup:dict[@"banerList"]];
-    _baner.delegate = self;
     _baner.imagesGroup = dict[@"bannerList"];
     _baner.autoScrollTimeInterval = 3;
     [container addSubview:_baner];
@@ -204,7 +203,6 @@
     
     
     _notic = [AdvertisingView selectScrollViewWithFrame:CGRectZero data:_data[@"noticeList"]];
-    _notic.delegate = self;
     _notic.imagesGroup = dict[@"noticeList"];
     _notic.autoScrollTimeInterval = 3;
     [container addSubview:_notic];
@@ -237,30 +235,8 @@
 
 
 
-#pragma mark - SDCycleScrollViewDelegate
 
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
-{
-    NSLog(@"---点击了第%ld张图片", index);
-}
 
-- (void)selectScrollView:(AdvertisingView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-    
-    NSLog(@"---点击了第%ld张图片", index);
-    NSDictionary * dict = cycleScrollView.imagesGroup[index];
-//     NSString * str = [NSString stringWithFormat:@"http://pro1test.zjyckj.com.cn:8082/consumer/appH5Pages/infordetails/infordeta.html?id=1&type=%@",dict[@"id"]];
-    DetailWebProductVC * detail = [DetailWebProductVC new];
-    detail.url = dict[@"href"];
-
-    [self.navigationController pushViewController:detail animated:YES];
-    
-//    [self.navigationController cyl_popSelectTabBarChildViewControllerAtIndex:2];
-//    [self cyl_popSelectTabBarChildViewControllerAtIndex:2 completion:^(__kindof UIViewController *selectedTabBarChildViewController) {
-//        ProductViewController * product = selectedTabBarChildViewController;
-//    [product.navigationController pushViewController:detail animated:YES];
-
-//    }];
-}
 - (void)dealloc{
     
     NSLog(@"12312312313");
@@ -268,7 +244,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+   
+    
+    
+    
+    
 }
 
 

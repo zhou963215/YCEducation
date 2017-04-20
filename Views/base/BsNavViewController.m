@@ -30,7 +30,7 @@
 
 //    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 //    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 
     self.navigationController.navigationBar.barTintColor = UICOLORRGB(0x3EA0E6);
     self.view.backgroundColor = UICOLORRGB(0xf8f8f8);
