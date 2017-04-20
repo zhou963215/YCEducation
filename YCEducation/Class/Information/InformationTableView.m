@@ -9,6 +9,7 @@
 #import "InformationTableView.h"
 #import "UIView+Controller.h"
 #import "ApprovalTableViewCell.h"
+#import "WebViewController.h"
 @interface InformationTableView ()
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -113,10 +114,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    [self.tableView.navigationController pushViewController:[PushViewController new] animated:YES];
     
     NSLog(@"%ld",(long)indexPath.row);
     
+    NSDictionary * dict = _apList[indexPath.row];
+    WebViewController * web = [WebViewController new];
+    web.url = dict[@"href"];
+    [self.tableView.navigationController pushViewController:web animated:YES];
+
 }
 
 

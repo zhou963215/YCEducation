@@ -199,7 +199,7 @@
     [leftbg addSubview:right];
     
     
-    
+    NSLog(@"1123132");
     
     
     _notic = [AdvertisingView selectScrollViewWithFrame:CGRectZero data:_data[@"noticeList"]];
