@@ -123,7 +123,7 @@
     NSDictionary * dict = self.dataArr[indexPath.row];
 //    NSString * str = [NSString stringWithFormat:@"http://pro1test.zjyckj.com.cn:8082/consumer/appH5Pages/infordetails/infordeta.html?id=1&type=%@",dict[@"id"]];
     DetailWebProductVC * vc = [DetailWebProductVC new];
-    vc.url = dict[@"href"];
+    vc.url = [PublicVoid getNewUrl:dict[@"href"]];
     
     [self.tableView.navigationController pushViewController:vc animated:YES];
 }

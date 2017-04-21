@@ -98,7 +98,7 @@
 
 //    NSString * url  =  indexPath.row?[NSString stringWithFormat:@"%@",_arr[@""]]:[NSString stringWithFormat:@"%@",_arr[@""]];
     WebViewController * web = [WebViewController new];
-    web.url = dict[@"href"];
+    web.url = [PublicVoid getNewUrl:dict[@"href"]];
     if ([web.url isEqualToString:@""]||web.url==nil) {
         
         [ZHHud initWithMessage:@"暂无页面"];

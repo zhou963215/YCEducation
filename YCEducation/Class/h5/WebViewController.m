@@ -43,14 +43,14 @@
     [super viewWillDisappear:animated];
 //        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 //        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-//    [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
+    [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
     
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
-//    [[IQKeyboardManager sharedManager]setEnable:NO];
+    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
+    [[IQKeyboardManager sharedManager]setEnable:NO];
     
 }
 
@@ -64,6 +64,7 @@
     
     _peopleType = 0;
   
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
 
 
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
@@ -101,10 +102,10 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+ 
     _isError = NO;
 
-    
-        [_hud hideAnimated:YES];
+    [_hud hideAnimated:YES];
         
     self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
@@ -117,14 +118,14 @@
     
     //原生调用JS
     //token
-    NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-    [self.context[@"saveToken"] callWithArguments:@[token]];
-    //设备ID
-    NSString* identifierNumber = [[UIDevice currentDevice].identifierForVendor UUIDString] ;
-    [self.context[@"savedeviceid"] callWithArguments:@[identifierNumber]];
-    
-    //版本号
-    [self.context[@"saveVersion"] callWithArguments:@[@"1.0"]];
+//    NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+//    [self.context[@"saveToken"] callWithArguments:@[token]];
+//    //设备ID
+//    NSString* identifierNumber = [[UIDevice currentDevice].identifierForVendor UUIDString] ;
+//    [self.context[@"savedeviceid"] callWithArguments:@[identifierNumber]];
+//    
+//    //版本号
+//    [self.context[@"saveVersion"] callWithArguments:@[@"1.0"]];
     
     
     
@@ -173,9 +174,6 @@
     
 }
 
-- (UIView*)viewForZoomingInScrollView:(UIScrollView*)scrollView{ // 实现代理方法， step 3
-    return nil;
-}
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     
     

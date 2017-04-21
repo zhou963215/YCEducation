@@ -15,4 +15,5 @@
 +(BOOL)isValidateEmail:(NSString *)email;
 +(BOOL)isUserName:(NSString * )userName;
 +(void)LogOut;
++ (NSString *)getNewUrl:(NSString *)url;
 @end

@@ -16,11 +16,11 @@
 #import <MJRefresh/MJRefresh.h>
 #import "ProductViewController.h"
 #import "DetailWebProductVC.h"
-@interface HomeViewController ()
+@interface HomeViewController ()<UIGestureRecognizerDelegate,UINavigationControllerDelegate>
 {
-    UIScrollView *scrollView;
     BOOL isFirst;
 }
+@property(nonatomic,strong) UIScrollView *scrollView;;
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,assign)CGFloat y;
 @property(nonatomic,strong)FunctionCollection * bgVC;
@@ -34,6 +34,15 @@
 
 @implementation HomeViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -42,18 +51,18 @@
     
     //    [self tokenLogin];
     
-    scrollView = [UIScrollView new];
-    scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
-    scrollView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:scrollView];
+    _scrollView = [UIScrollView new];
+    _scrollView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
+    _scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
     WEAKSELF(wk);
     
-    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(wk.view).with.insets(UIEdgeInsetsMake(0,0,0,0));
     }];
     
     [self tokenLogin];
-    
+
     
 }
 
@@ -70,7 +79,7 @@
             
             [[NSUserDefaults standardUserDefaults]setObject:dict[@"campusId"] forKey:@"campusId"];
 
-            [scrollView.mj_header beginRefreshing];
+            [_scrollView.mj_header beginRefreshing];
 
         }
         
@@ -81,6 +90,11 @@
     
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
+    return NO;
+}
+
 - (void)refresh{
     
     
@@ -89,7 +103,7 @@
         
         
         
-        [scrollView.mj_header endRefreshing];
+        [_scrollView.mj_header endRefreshing];
         
         if ([responseObject[@"status"]isEqualToString:@"ok"]) {
             if ([responseObject[@"status"]isEqualToString:@"ok"]) {
@@ -115,7 +129,7 @@
         
     } failure:^(NSError * _Nonnull error) {
         
-        [scrollView.mj_header endRefreshing];
+        [_scrollView.mj_header endRefreshing];
         
         
     }];
@@ -140,11 +154,11 @@
     
     
     UIView *container = [UIView new];
-    [scrollView addSubview:container];
+    [_scrollView addSubview:container];
     
     [container mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(scrollView);
-        make.width.equalTo(scrollView);
+        make.edges.equalTo(wk.scrollView);
+        make.width.equalTo(wk.scrollView);
     }];
     CGFloat h = (HEIGHT-64-49) *( 150/(HEIGHT-64-49));
     _baner = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, WIDTH, h) imagesGroup:dict[@"banerList"]];
@@ -199,7 +213,6 @@
     [leftbg addSubview:right];
     
     
-    NSLog(@"1123132");
     
     
     _notic = [AdvertisingView selectScrollViewWithFrame:CGRectZero data:_data[@"noticeList"]];

@@ -165,7 +165,7 @@ NSString * const identer = @"zhcCell";
     long itemIndex = indexPath.item % self.imagesGroup.count;
     NSDictionary *data = self.imagesGroup[itemIndex];
     DetailWebProductVC * detail = [DetailWebProductVC new];
-    detail.url = data[@"href"];
+    detail.url =[PublicVoid getNewUrl: data[@"href"]];
     [self.collection.navigationController pushViewController:detail animated:YES];
 
     

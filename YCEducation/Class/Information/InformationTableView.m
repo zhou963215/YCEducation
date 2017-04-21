@@ -119,7 +119,7 @@
     
     NSDictionary * dict = _apList[indexPath.row];
     WebViewController * web = [WebViewController new];
-    web.url = dict[@"href"];
+    web.url =[PublicVoid getNewUrl: dict[@"href"]];
     [self.tableView.navigationController pushViewController:web animated:YES];
 
 }

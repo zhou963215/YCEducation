@@ -24,8 +24,7 @@
     self.navigationController.navigationBar.barTintColor = UICOLORRGB(0xffffff);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18],NSForegroundColorAttributeName:UICOLORRGB(0x282828)}];
 
-    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
-
+  
 }
 
 

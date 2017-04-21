@@ -16,7 +16,7 @@
 #import <MJRefresh/MJRefresh.h>
 #import "WebViewController.h"
 #import "ZHHud.h"
-@interface InformationViewController ()
+@interface InformationViewController ()<UINavigationControllerDelegate>
 {
     UIScrollView *scrollView;
     BOOL isFirst;
@@ -36,6 +36,15 @@
 
 @implementation InformationViewController
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UICOLORRGB(0xf8f8f8);
@@ -214,7 +223,7 @@
         NSLog(@"%ld",(long)tag);
         NSDictionary * urlDict = wk.topArr[tag-1];
         WebViewController * wb = [WebViewController new];
-        wb.url  = urlDict[@"url"];
+        wb.url  = [PublicVoid getNewUrl:urlDict[@"url"]];
         if ([wb.url isEqualToString:@""]||wb.url==nil) {
             
             [ZHHud initWithMessage:@"暂无页面"];

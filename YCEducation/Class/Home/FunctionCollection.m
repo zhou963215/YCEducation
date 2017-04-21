@@ -121,7 +121,7 @@
         
         
         WebViewController * web = [WebViewController new];
-        web.url = dict[@"apUrl"];
+        web.url = [PublicVoid getNewUrl:dict[@"apUrl"]];
         if ([web.url isEqualToString:@""]||web.url==nil) {
             
             [ZHHud initWithMessage:@"暂无页面"];

@@ -121,6 +121,7 @@
 		CB941FED1E7BE6DB0052F7F9 /* NSString+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = CB941FEC1E7BE6DB0052F7F9 /* NSString+Md5.m */; };
 		CB941FF01E7CCC800052F7F9 /* BsNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB941FEF1E7CCC800052F7F9 /* BsNavViewController.m */; };
 		CB941FF31E7D20610052F7F9 /* NSObject+Astray.m in Sources */ = {isa = PBXBuildFile; fileRef = CB941FF21E7D20610052F7F9 /* NSObject+Astray.m */; };
+		CBAFBCB21EA88ECE003F1CA7 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBAFBCB11EA88ECE003F1CA7 /* Bugly.framework */; };
 		CBFBE3AC1E5FE150004BA06F /* HudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBFBE3AB1E5FE150004BA06F /* HudViewController.m */; };
 		CBFBE3AF1E5FE164004BA06F /* CellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBFBE3AE1E5FE164004BA06F /* CellViewController.m */; };
 		CBFBE3B21E63CF2D004BA06F /* ZHHud.m in Sources */ = {isa = PBXBuildFile; fileRef = CBFBE3B11E63CF2D004BA06F /* ZHHud.m */; };
@@ -380,6 +381,7 @@
 		CB941FEF1E7CCC800052F7F9 /* BsNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BsNavViewController.m; sourceTree = "<group>"; };
 		CB941FF11E7D20610052F7F9 /* NSObject+Astray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Astray.h"; sourceTree = "<group>"; };
 		CB941FF21E7D20610052F7F9 /* NSObject+Astray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Astray.m"; sourceTree = "<group>"; };
+		CBAFBCB11EA88ECE003F1CA7 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		CBFBE3AA1E5FE150004BA06F /* HudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudViewController.h; sourceTree = "<group>"; };
 		CBFBE3AB1E5FE150004BA06F /* HudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudViewController.m; sourceTree = "<group>"; };
 		CBFBE3AD1E5FE164004BA06F /* CellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellViewController.h; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBAFBCB21EA88ECE003F1CA7 /* Bugly.framework in Frameworks */,
 				CB0337871E6E54D700ED06D7 /* libsqlite3.0.tbd in Frameworks */,
 				CBFBE3DD1E64189A004BA06F /* libc++.tbd in Frameworks */,
 				CBFBE3DB1E641893004BA06F /* libz.tbd in Frameworks */,
@@ -686,6 +689,7 @@
 		CB82A4D51E56DBDC0016F154 = {
 			isa = PBXGroup;
 			children = (
+				CBAFBCB11EA88ECE003F1CA7 /* Bugly.framework */,
 				CB82A4E01E56DBDC0016F154 /* YCEducation */,
 				CB82A4FA1E56DBDC0016F154 /* YCEducationTests */,
 				CB82A5051E56DBDC0016F154 /* YCEducationUITests */,
@@ -1545,6 +1549,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YCEducation",
+					"$(PROJECT_DIR)",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YCEducation/pch.pch";
@@ -1571,6 +1576,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YCEducation",
+					"$(PROJECT_DIR)",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/YCEducation/pch.pch";

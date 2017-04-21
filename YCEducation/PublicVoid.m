@@ -115,5 +115,18 @@
     
     
 }
++ (NSString *)getNewUrl:(NSString *)url{
+    
+    
+    NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    //设备ID
+    NSString* identifierNumber = [[UIDevice currentDevice].identifierForVendor UUIDString] ;
+    
+    //版本号
+    NSString * str = [NSString stringWithFormat:@"%@&token=%@&deviceId=%@&version=1.0.0",url,token,identifierNumber];
+    
+    return str;
+}
+
 
 @end
