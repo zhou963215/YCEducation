@@ -94,9 +94,22 @@
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    
-    
-    
+    NSString * s = [NSString stringWithFormat:@"%@",request.URL];
+    if([s rangeOfString:@"token"].location ==NSNotFound)//_roaldSearchText
+    {
+        NSString  * str;
+        
+        if ([s rangeOfString:@"?"].location ==NSNotFound) {
+           str = [PublicVoid getNewUrl:[NSString stringWithFormat:@"%@?",request.URL]];
+        }
+        else{
+            str = [PublicVoid getNewUrl:[NSString stringWithFormat:@"%@",request.URL]];
+
+        }
+        NSURL * url = [NSURL URLWithString:str];
+        [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+        return NO;
+    }
     NSLog(@"%@",request.URL);
     return YES;
 }
@@ -109,6 +122,16 @@
         
     self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    //原生调用JS
+    //token
+    NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+    [self.context[@"saveToken"]callWithArguments:@[token]];
+    //设备ID
+    NSString* identifierNumber = [[UIDevice currentDevice].identifierForVendor UUIDString] ;
+    [self.context[@"savedeviceid"] callWithArguments:@[identifierNumber]];
+    
+    //版本号
+    [self.context[@"saveVersion"] callWithArguments:@[@"1.0.0"]];
     self.context.exceptionHandler =
     ^(JSContext *context, JSValue *exceptionValue)
     {
@@ -116,16 +139,7 @@
         NSLog(@"%@", exceptionValue);
     };
     
-    //原生调用JS
-    //token
-//    NSString * token = [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
-//    [self.context[@"saveToken"] callWithArguments:@[token]];
-//    //设备ID
-//    NSString* identifierNumber = [[UIDevice currentDevice].identifierForVendor UUIDString] ;
-//    [self.context[@"savedeviceid"] callWithArguments:@[identifierNumber]];
-//    
-//    //版本号
-//    [self.context[@"saveVersion"] callWithArguments:@[@"1.0"]];
+   
     
     
     

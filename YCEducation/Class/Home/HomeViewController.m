@@ -16,7 +16,8 @@
 #import <MJRefresh/MJRefresh.h>
 #import "ProductViewController.h"
 #import "DetailWebProductVC.h"
-@interface HomeViewController ()<UIGestureRecognizerDelegate,UINavigationControllerDelegate>
+#import "ZHHud.h"
+@interface HomeViewController ()<UINavigationControllerDelegate>
 {
     BOOL isFirst;
 }
@@ -73,6 +74,14 @@
     [[ZHNetWorking sharedZHNetWorking]POSTLOGIN:@"2001" parameters:@{@"token":token} success:^(id  _Nonnull responseObject) {
         
 //        NSLog(@"%@",responseObject);
+        if ([responseObject[@"errCode"]isEqualToString:@"1002"]) {
+            
+            [PublicVoid LogOut];
+            
+            [ZHHud initWithMessage:@"您的登录已过期,请重新登录"];
+            
+        }
+        
         if ([responseObject[@"status"]isEqualToString:@"ok"]) {
             
             NSDictionary * dict = responseObject[@"data"];
@@ -90,10 +99,7 @@
     
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
-    return NO;
-}
+
 
 - (void)refresh{
     
@@ -144,7 +150,8 @@
     [_ttCollection upDataWithData:dict[@"undeterminedList"]];
     _notic.imagesGroup = dict[@"noticeList"];
     _bgVC.apList = dict[@"apList"];
-    _welecomLB = dict[@"welWord"];
+    
+    _welecomLB.text = dict[@"welWord"];
     
     
 }
@@ -167,7 +174,7 @@
     [container addSubview:_baner];
     
     _welecomLB = [UILabel new];
-    _welecomLB.text = @"欢迎";
+    _welecomLB.text = dict[@"welWord"];
     [container addSubview:_welecomLB];
     
     [_welecomLB mas_makeConstraints:^(MASConstraintMaker *make) {
